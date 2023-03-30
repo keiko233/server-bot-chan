@@ -1,0 +1,12 @@
+{
+  "name": "server-bot-chan",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js"
+  },
+  "author": "keiko233",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}
