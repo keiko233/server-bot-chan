@@ -1,3 +1,7 @@
+const { 
+  getHighestCPUUsageUser, 
+  getHighestCPUUsageCommand
+} = require('./functions');
 const os = require('os');
 const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
@@ -14,6 +18,8 @@ function getSystemInfo() {
   const totalMemMB = totalMem / 1024 / 1024 / 1024;
   const userInfo = os.userInfo();
   const hostname = os.hostname();
+  const highestCPUUsageUser = getHighestCPUUsageUser();
+  const highestCPUUsageCommand = getHighestCPUUsageCommand();
 
   return {
     cpuLoad,
@@ -24,7 +30,9 @@ function getSystemInfo() {
     usedMem,
     totalMemMB,
     userInfo,
-    hostname
+    hostname,
+    highestCPUUsageUser,
+    highestCPUUsageCommand
   };
 }
 
@@ -42,6 +50,8 @@ CPU核心数量: ${info.cpuCount}
 内存使用率: ${info.memUsage}%
 已用内存: ${info.usedMem.toFixed(2)} GB
 总计内存: ${info.totalMemMB.toFixed(2)} GB
-当前用户: ${info.userInfo.username}`;
+当前用户: ${info.userInfo.username}
+占用最高用户: ${info.highestCPUUsageUser}
+占用最高进程: ${info.highestCPUUsageCommand}`;
   bot.sendMessage(chatId, infoMsg);
 });
