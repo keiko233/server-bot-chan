@@ -6,10 +6,10 @@ const bot = new TelegramBot(token, {polling: true});
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, '可用指令：\n/info - 汇报信息');
+  bot.sendMessage(chatId, '可用指令：\n/getinfo - 汇报信息');
 });
 
-bot.onText(/\/info/, (msg) => {
+bot.onText(/\/getinfo/, (msg) => {
   const chatId = msg.chat.id;
   const cpuLoad = os.loadavg()[0];
   const totalMem = os.totalmem();
@@ -22,9 +22,9 @@ bot.onText(/\/info/, (msg) => {
   const hostname = os.hostname();
   
   const infoMsg = `Hostname: ${hostname}
-CPU占用百分比: ${(cpuLoad * 100).toFixed(2)}%
+CPU占用率: ${(cpuLoad * 100).toFixed(2)}%
 CPU核心数量: ${cpuCount}
-内存使用率: ${memUsage}
+内存使用率: ${(memUsage * 100).toFixed(2)}%
 已用内存: ${usedMem.toFixed(2)} GB
 总计内存: ${totalMemMB.toFixed(2)} GB
 当前用户: ${userInfo.username}`;
