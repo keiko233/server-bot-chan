@@ -1,3 +1,4 @@
+const os = require('os');
 const { execSync } = require('child_process');
 
 function getHighestCPUUsageUser() {
@@ -10,7 +11,27 @@ function getHighestCPUUsageCommand() {
   return execSync(command).toString().trim();
 }
 
-module.exports = { 
+function getCPUCount() {
+  return os.cpus().length;
+}
+
+function getCPULoad() {
+  let totalIdle = 0;
+  let total = 0;
+  os.cpus().forEach(cpu => {
+    for (let type in cpu.times) {
+      total += cpu.times[type];
+    }
+
+    totalIdle += cpu.times.idle;
+  });
+  const percentage = (1 - totalIdle / total) * 100;
+  return percentage.toFixed(2);
+}
+
+module.exports = {
   getHighestCPUUsageUser,
-  getHighestCPUUsageCommand
+  getHighestCPUUsageCommand,
+  getCPUCount,
+  getCPULoad
 }

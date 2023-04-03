@@ -1,6 +1,8 @@
 const { 
-  getHighestCPUUsageUser, 
-  getHighestCPUUsageCommand
+  getHighestCPUUsageUser,
+  getHighestCPUUsageCommand,
+  getCPUCount,
+  getCPULoad
 } = require('./functions');
 const os = require('os');
 const fs = require('fs');
@@ -9,11 +11,11 @@ const token = JSON.parse(fs.readFileSync('./config.json')).token;
 const bot = new TelegramBot(token, {polling: true});
 
 function getSystemInfo() {
-  const cpuLoad = (os.loadavg()[0] * 100).toFixed(2);
+  const cpuLoad = getCPULoad();
   const totalMem = os.totalmem();
   const freeMem = os.freemem();
   const memUsage = ((1 - freeMem / totalMem) * 100).toFixed(2);
-  const cpuCount = os.cpus().length;
+  const cpuCount = getCPUCount();
   const usedMem = (totalMem - freeMem) / 1024 / 1024 / 1024;
   const totalMemMB = totalMem / 1024 / 1024 / 1024;
   const userInfo = os.userInfo();
