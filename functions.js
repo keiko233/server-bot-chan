@@ -16,17 +16,8 @@ function getCPUCount() {
 }
 
 function getCPULoad() {
-  let totalIdle = 0;
-  let total = 0;
-  os.cpus().forEach(cpu => {
-    for (let type in cpu.times) {
-      total += cpu.times[type];
-    }
-
-    totalIdle += cpu.times.idle;
-  });
-  const percentage = (1 - totalIdle / total) * 100;
-  return percentage.toFixed(2);
+  const command = "top -b -n1 | awk 'NR<6' | awk 'NR>2' | head -n1 | awk '{print $8}'";
+  return (100 - Number(execSync(command))).toFixed(2);
 }
 
 module.exports = {
