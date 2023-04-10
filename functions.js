@@ -16,8 +16,9 @@ function getCPUCount() {
 }
 
 function getCPULoad() {
-  const command = "top -b -n1 | awk 'NR<6' | awk 'NR>2' | head -n1 | awk '{print $8}'";
-  return (100 - Number(execSync(command))).toFixed(2);
+  const user = Number(execSync("top -b -n1 | awk 'NR<6' | awk 'NR>2' | head -n1 | awk '{print $2}'"));
+  const system = Number(execSync("top -b -n1 | awk 'NR<6' | awk 'NR>2' | head -n1 | awk '{print $4}'"));
+  return (user + system).toFixed(2);
 }
 
 function getSystemInfo() {
