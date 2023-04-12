@@ -1,5 +1,5 @@
-const os = require('os');
-const { execSync } = require('child_process');
+import * as os from 'os';
+import { execSync } from 'child_process';
 
 function getHighestCPUUsageUser() {
   const command = "top -b -n1 | awk 'NR>7 {a[$2]+=$9} END {for (i in a) print a[i],i | \"sort -rn\"} ' | head -n 1 | awk '{print $2}'";
@@ -49,7 +49,7 @@ function getSystemInfo() {
   };
 }
 
-module.exports = {
+export {
   getHighestCPUUsageUser,
   getHighestCPUUsageCommand,
   getCPUCount,
