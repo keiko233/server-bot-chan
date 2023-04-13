@@ -27,11 +27,12 @@ bot.command('getinfo', async (ctx) => {
 bot.command('wakeme', async (ctx) => {
   const chatId = ctx.chat.id;
   const messageId = ctx.message.message_id
+  const messageText = ctx.message.text;
 
   let count: number = 0;
   let loadCount: number = 0;
-  const timeLimit: number = 60;
-  const threshold: number = 5;
+  const timeLimit: number = Number(messageText.split(' ')[1] || 60 );
+  const threshold: number = Number(messageText.split(' ')[2] || 5 );
 
   const replyMessage = (time: number, cpuLoad: any) => {
     return `将会在服务器CPU负载低于${threshold}%持续${timeLimit}秒后提醒你。
@@ -65,3 +66,6 @@ bot.command('wakeme', async (ctx) => {
 });
 
 bot.launch()
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'))

@@ -5,7 +5,9 @@ import {
 const helpInfo: string = `Elaina的服务器小Bot
 可用指令：
 /getinfo - 汇报服务器信息
-/wakeme - 服务器空闲时提醒我`;
+/wakeme - 服务器空闲时提醒我
+  可选参数：[时间限制] [CPU最低占用阀值]
+  默认值: 60, 5`;
 
 const systemInfo = () => {
   const info = getSystemInfo();
